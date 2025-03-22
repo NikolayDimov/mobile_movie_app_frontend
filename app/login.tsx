@@ -51,7 +51,7 @@ export default function Login() {
                 style={styles.input}
             />
             {error ? <Text style={styles.error}>{error}</Text> : null}
-            <Button title="Login" onPress={handleLogin} color="#4CAF50" />
+            <Button title="Login" onPress={handleLogin} color="#AE8FFE" />
             <Text style={styles.registerText} onPress={() => router.push("./register")}>
                 Don't have an account? Register
             </Text>
@@ -64,13 +64,14 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         padding: 20,
-        backgroundColor: "#F5F5F5",
+        backgroundColor: "#2d2d2d",
     },
     header: {
         fontSize: 30,
         fontWeight: "bold",
         textAlign: "center",
         marginBottom: 30,
+        color: "white",
     },
     input: {
         height: 45,
