@@ -5,7 +5,6 @@ import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 
 import { getMovies } from "@/services/api";
-import Movie from "./movieCard.static";
 import MovieCard from "./movieCard";
 
 export default function Index() {
@@ -15,7 +14,9 @@ export default function Index() {
         data: movies,
         loading: moviesLoading,
         error: moviesError,
-    } = useFetch<Movie[]>(getMovies);
+    } = useFetch(getMovies);
+
+    console.log('data', movies);
 
     return (
         <View style={styles.container}>
@@ -40,19 +41,16 @@ export default function Index() {
                             renderItem={({ item }) => (
                                 <MovieCard
                                     title={item.title}
-                                    description={item.description}
-                                    releaseDate={item.releaseDate}
-                                    genre={item.genre}
+                                    release_date={item.release_date}
                                     image={item.image}
                                 />
                             )}
-                            keyExtractor={(item) => item.movieId ?? item.title} // Use movieId or fallback to title
+                            keyExtractor={(item) => item.movieId ?? item.title}
                             numColumns={3}
                             columnWrapperStyle={styles.columnWrapper}
                             style={styles.latestMovies}
                             scrollEnabled={false}
                         />
-
                     </View>
                 )}
             </ScrollView>
@@ -63,11 +61,13 @@ export default function Index() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#2d2d2d",
+        backgroundColor: "#161622",
     },
     bgImage: {
         position: "absolute",
         width: "100%",
+        height: "100%",
+        resizeMode: "cover",
         zIndex: 0,
     },
     scrollView: {
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         minHeight: "100%",
-        paddingBottom: 10,
+        paddingBottom: 20,
     },
     logo: {
         width: 48,
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
     },
     loader: {
-        marginTop: 30,
+        marginTop: 40,
         alignSelf: "center",
     },
     errorText: {
@@ -100,18 +100,18 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         fontSize: 18,
-        color: "white",
+        color: "#ffffff",
         fontWeight: "bold",
-        marginBottom: 10,
+        marginBottom: 12,
     },
     columnWrapper: {
         justifyContent: "flex-start",
         gap: 20,
         paddingRight: 5,
-        marginBottom: 10,
+        marginBottom: 12,
     },
     latestMovies: {
-        marginTop: 10,
-        paddingBottom: 32,
+        marginTop: 8,
+        paddingBottom: 64,
     },
 });
