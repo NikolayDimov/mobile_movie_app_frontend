@@ -40,6 +40,7 @@ export default function Index() {
                             data={movies}
                             renderItem={({ item }) => (
                                 <MovieCard
+                                    movie_id={item.movie_id}
                                     title={item.title}
                                     release_date={item.release_date}
                                     image={item.image}

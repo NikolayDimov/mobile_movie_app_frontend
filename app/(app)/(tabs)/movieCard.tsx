@@ -1,27 +1,25 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { Link } from "expo-router";
+import Movie from './movieCard.static'
 
-type Movie = {
-    title: string;
-    release_date: string;
-    image: string;
-};
-
-const MovieCard: React.FC<Movie> = ({ title, release_date, image }) => {
+const MovieCard: React.FC<Movie> = ({ movie_id, title, release_date, image }) => {
     const movieYear = release_date?.split("-")[0];
-    console.log("MovieCard", title, movieYear, image);
+    console.log('movieCard - mvie id', movie_id);
 
     return (
-        <TouchableOpacity style={styles.card}>
-            <Image source={{ uri: image }} style={styles.image} resizeMode="cover" />
+        <Link href={`/movies/${movie_id}`} asChild>
+            <TouchableOpacity style={styles.card}>
+                <Image source={{ uri: image }} style={styles.image} resizeMode="cover" />
 
-            <Text style={styles.title} numberOfLines={1}>
-                {title}
-            </Text>
+                <Text style={styles.title} numberOfLines={1}>
+                    {title}
+                </Text>
 
-            <View style={styles.detailsRow}>
-                <Text style={styles.year}>{movieYear}</Text>
-            </View>
-        </TouchableOpacity>
+                <View style={styles.detailsRow}>
+                    <Text style={styles.year}>{movieYear}</Text>
+                </View>
+            </TouchableOpacity>
+        </Link>
     );
 };
 

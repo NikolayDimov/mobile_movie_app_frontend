@@ -1,8 +1,8 @@
 export default interface Movie {
-    movieId?: string;
+    movie_id?: string;
     title: string;
-    description: string;
-    releaseDate: string;
-    genre: string;
+    description?: string;
+    release_date: string;
+    genre?: string;
     image: string;
 }
