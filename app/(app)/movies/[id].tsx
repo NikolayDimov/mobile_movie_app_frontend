@@ -128,15 +128,18 @@ const styles = StyleSheet.create({
     },
     infoContainer: {
         marginTop: 12,
+
     },
     label: {
-        color: '#aaa',
+        color: '#A8B5DB',
         fontSize: 14,
+        fontWeight: '400',
     },
     value: {
-        color: '#fff',
+        color: '#D6C6FF',
         fontSize: 14,
-        fontWeight: 'bold',
+        fontWeight: '700',
+        marginTop: 8,
     },
     financialsContainer: {
         flexDirection: 'row',

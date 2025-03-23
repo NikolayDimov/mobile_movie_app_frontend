@@ -1,27 +1,17 @@
-import { View, Text, ImageBackground, Image } from 'react-native'
+import { View, Text, Image, StyleSheet } from 'react-native'
 import React from 'react'
 import { Tabs } from 'expo-router'
-import { images } from '@/constants/images'
+
 import { icons } from '@/constants/icons'
 
 const TabIcon = ({ focused, icon, title }: any) => {
-    if (focused) {
-        return (
-            <ImageBackground
-                source={images.highlight}
-                className="flex flex-row w-full flex-1 min-w-[112px] min-h-16 mt-4 justify-center items-center rounded-full overflow-hidden"
-            >
-                <Image source={icon}
-                    tintColor="#151312" className="size-5"
-                />
-                <Text className='text-secondary text-base font-semibold ml-2'>{title}</Text>
-            </ImageBackground>
+    const backgroundColor = focused ? '#AB8BFF' : 'transparent';
+    const textColor = focused ? '#151312' : '#A8B5DB';
 
-        )
-    }
     return (
-        <View className="size-full justify-center items-center mt-4 rounded-full">
-            <Image source={icon} tintColor="#A8B5DB" className="size-5" />
+        <View style={[styles.tabIconContainer, { backgroundColor }]}>
+            <Image source={icon} style={[styles.icon, { tintColor: textColor }]} />
+            {focused && <Text style={[styles.tabTitle, { color: '#fff' }]}>{title}</Text>}
         </View>
     );
 }
@@ -42,7 +32,7 @@ const TabsLayout = () => {
                     borderRadius: 50,
                     marginHorizontal: 20,
                     marginBottom: 36,
-                    height: 52,
+                    height: 48,
                     position: "absolute",
                     overflow: "hidden",
                     borderWidth: 1,
@@ -109,5 +99,27 @@ const TabsLayout = () => {
         </Tabs>
     )
 }
+
+const styles = StyleSheet.create({
+    tabIconContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 10,
+        borderRadius: 25,
+        minWidth: 112,
+        minHeight: 48,
+    },
+    icon: {
+        width: 24,
+        height: 24,
+    },
+    tabTitle: {
+        fontSize: 14,
+        fontWeight: '600',
+        marginLeft: 8,
+    },
+});
 
 export default TabsLayout;
