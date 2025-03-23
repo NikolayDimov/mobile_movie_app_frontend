@@ -50,7 +50,6 @@ const MovieDetails = () => {
                     <Image
                         source={movie?.image}
                         style={styles.image}
-                        resizeMode="stretch"
                     />
                 </View>
                 <View style={styles.detailsContainer}>
@@ -87,6 +86,7 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: 550,
+        resizeMode: "cover"
     },
     detailsContainer: {
         padding: 16,
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
         bottom: 20,
         left: 16,
         right: 16,
-        backgroundColor: '#ff6b81',
+        backgroundColor: '#AB8BFF',
         paddingVertical: 12,
         borderRadius: 8,
         flexDirection: 'row',

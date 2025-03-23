@@ -106,8 +106,11 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
     columnWrapper: {
-        justifyContent: "flex-start",
-        gap: 10,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: 4,
 
     },
     latestMovies: {
