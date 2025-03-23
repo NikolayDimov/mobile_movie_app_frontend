@@ -5,7 +5,7 @@ import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 
 import { getMovies } from "@/services/api";
-import MovieCard from "./movieCard";
+import MovieCard from "../../../components/MovieCard/movieCard";
 
 export default function Index() {
     const router = useRouter();
@@ -73,11 +73,11 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         flex: 1,
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
     },
     contentContainer: {
         minHeight: "100%",
-        paddingBottom: 20,
+        paddingBottom: 10,
     },
     logo: {
         width: 48,
@@ -107,9 +107,8 @@ const styles = StyleSheet.create({
     },
     columnWrapper: {
         justifyContent: "flex-start",
-        gap: 20,
-        paddingRight: 5,
-        marginBottom: 12,
+        gap: 10,
+
     },
     latestMovies: {
         marginTop: 8,

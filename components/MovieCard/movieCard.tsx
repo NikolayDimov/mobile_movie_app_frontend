@@ -1,6 +1,6 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { Link } from "expo-router";
-import Movie from './movieCard.static'
+import Movie from '../../components/MovieCard/movieCard.static'
 
 const MovieCard: React.FC<Movie> = ({ movie_id, title, release_date, image }) => {
     const movieYear = release_date?.split("-")[0];

@@ -8,7 +8,7 @@ import useFetch from "@/services/usefetch";
 import { fetchMovies } from "@/services/api";
 
 import SearchBar from "@/components/SearchBar";
-import MovieDisplayCard from "@/components/MovieCard";
+import MovieDisplayCard from "@/components/MovieCard/movieCard";
 
 
 const Search = () => {
