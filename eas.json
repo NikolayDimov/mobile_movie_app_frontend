@@ -2,11 +2,20 @@
     "build": {
         "development": {
             "developmentClient": true,
-            "distribution": "internal"
+            "distribution": "internal",
+            "android": {
+                "simulator": true
+            },
+            "ios": {
+                "simulator": true
+            }
         },
         "preview": {
             "distribution": "internal"
         },
+        "production": {}
+    },
+    "submit": {
         "production": {}
     }
 }
