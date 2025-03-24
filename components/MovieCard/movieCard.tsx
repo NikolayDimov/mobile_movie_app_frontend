@@ -4,7 +4,6 @@ import Movie from '../../components/MovieCard/movieCard.static'
 
 const MovieCard: React.FC<Movie> = ({ movie_id, title, release_date, image }) => {
     const movieYear = release_date?.split("-")[0];
-    console.log('movieCard - mvie id', movie_id);
 
     return (
         <Link href={`/movies/${movie_id}`} asChild>

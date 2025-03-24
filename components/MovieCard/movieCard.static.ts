@@ -5,5 +5,5 @@ export default interface Movie {
     release_date: string;
     genre?: string;
     image: string;
-    length: string;
+    length?: string;
 }

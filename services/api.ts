@@ -3,7 +3,8 @@ import { getToken } from "@/utils/AsyncStorage";
 export const getMovies = async () => {
     const token = await getToken();
 
-    const response = await fetch('http://localhost:3000/movies', {
+    let url = 'http://localhost:3000/movies';
+    const response = await fetch(url, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

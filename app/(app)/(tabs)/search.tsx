@@ -1,78 +1,51 @@
 import { useState, useEffect } from "react";
-import { View, Text, ActivityIndicator, FlatList, Image } from "react-native";
+import { View, Text, ActivityIndicator, FlatList, Image, StyleSheet } from "react-native";
 
 import { images } from "@/constants/images";
 import { icons } from "@/constants/icons";
 
 import useFetch from "@/services/usefetch";
-import { fetchMovies } from "@/services/api";
+import { getMovies } from "@/services/api";
 
 import SearchBar from "@/components/SearchBar";
 import MovieDisplayCard from "@/components/MovieCard/movieCard";
-
+import Movie from "@/components/MovieCard/movieCard.static";
+import useFilter from "@/utils/search";
 
 const Search = () => {
-    const [searchQuery, setSearchQuery] = useState("");
-
-    const {
-        data: movies,
-        loading,
-        error,
-        refetch: loadMovies,
-        reset,
-    } = useFetch(() => fetchMovies({ query: searchQuery }), false);
-
-    // Debounced search effect
-    useEffect(() => {
-        const timeoutId = setTimeout(async () => {
-            if (searchQuery.trim()) {
-                await loadMovies();
-            } else {
-                reset();
-            }
-        }, 500);
-
-        return () => clearTimeout(timeoutId);
-    }, [searchQuery]);
-
-    useEffect(() => {
-        // Call updateSearchCount only if there are results
-        if (movies?.length! > 0 && movies?.[0]) {
-            updateSearchCount(searchQuery, movies[0]);
-        }
-    }, [movies])
+    const { data: movies, loading, error } = useFetch(() => getMovies());
+    const { filteredItems, setSearchQuery } = useFilter<Movie>({ items: movies || [] });
+    const [hasStartedTyping, setHasStartedTyping] = useState(false);
+    const handleSearchChange = (text: string) => {
+        setHasStartedTyping(true);
+        setSearchQuery(text);
+    };
 
     return (
-        <View className="flex-1 bg-primary">
+        <View style={styles.container}>
             <Image
                 source={images.bg}
-                className="flex-1 absolute w-full z-0"
+                style={styles.backgroundImage}
                 resizeMode="cover"
             />
 
             <FlatList
-                className="px-5"
-                data={movies as Movie[]}
-                keyExtractor={(item) => item.id.toString()}
+                data={filteredItems}
+                keyExtractor={(item) => item.movie_id ?? item.title}
                 renderItem={({ item }) => <MovieDisplayCard {...item} />}
                 numColumns={3}
-                columnWrapperStyle={{
-                    justifyContent: "flex-start",
-                    gap: 16,
-                    marginVertical: 16,
-                }}
-                contentContainerStyle={{ paddingBottom: 100 }}
+                columnWrapperStyle={styles.columnWrapper}
+                contentContainerStyle={styles.contentContainer}
                 ListHeaderComponent={
                     <>
-                        <View className="w-full flex-row justify-center mt-20 items-center">
-                            <Image source={icons.logo} className="w-12 h-10" />
+                        <View style={styles.logoContainer}>
+                            <Image source={icons.logo} style={styles.logo} />
                         </View>
 
-                        <View className="my-5">
+                        <View style={styles.searchContainer}>
                             <SearchBar
                                 placeholder="Search for a movie"
-                                value={searchQuery}
-                                onChangeText={(text: string) => setSearchQuery(text)}
+                                onChangeText={handleSearchChange}
                             />
                         </View>
 
@@ -80,33 +53,34 @@ const Search = () => {
                             <ActivityIndicator
                                 size="large"
                                 color="#0000ff"
-                                className="my-3"
+                                style={styles.loadingIndicator}
                             />
                         )}
 
                         {error && (
-                            <Text className="text-red-500 px-5 my-3">
+                            <Text style={styles.errorText}>
                                 Error: {error.message}
                             </Text>
                         )}
 
                         {!loading &&
                             !error &&
-                            searchQuery.trim() &&
-                            movies?.length! > 0 && (
-                                <Text className="text-xl text-white font-bold">
+                            filteredItems.length > 0 && (
+                                <Text style={styles.resultText}>
                                     Search Results for{" "}
-                                    <Text className="text-accent">{searchQuery}</Text>
+                                    <Text style={styles.accentText}>{filteredItems.length}</Text> movies
                                 </Text>
                             )}
                     </>
                 }
                 ListEmptyComponent={
                     !loading && !error ? (
-                        <View className="mt-10 px-5">
-                            <Text className="text-center text-gray-500">
-                                {searchQuery.trim()
-                                    ? "No movies found"
+                        <View style={styles.emptyContainer}>
+                            <Text style={styles.emptyText}>
+                                {hasStartedTyping
+                                    ? filteredItems.length === 0
+                                        ? "No movies found"
+                                        : ""
                                     : "Start typing to search for movies"}
                             </Text>
                         </View>
@@ -116,5 +90,66 @@ const Search = () => {
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#0D0D0D",
+    },
+    backgroundImage: {
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        zIndex: 0,
+    },
+    contentContainer: {
+        paddingBottom: 100,
+        paddingHorizontal: 16,
+    },
+    logoContainer: {
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "center",
+        marginTop: 40,
+        alignItems: "center",
+    },
+    logo: {
+        width: 48,
+        height: 40,
+    },
+    searchContainer: {
+        marginVertical: 20,
+    },
+    columnWrapper: {
+        justifyContent: "flex-start",
+        gap: 16,
+        marginVertical: 16,
+    },
+    loadingIndicator: {
+        marginVertical: 12,
+    },
+    errorText: {
+        color: "red",
+        marginHorizontal: 16,
+        marginVertical: 12,
+    },
+    resultText: {
+        fontSize: 18,
+        color: "#FFFFFF",
+        fontWeight: "bold",
+        marginBottom: 8,
+    },
+    accentText: {
+        color: "#FF5722",
+    },
+    emptyContainer: {
+        marginTop: 40,
+        paddingHorizontal: 16,
+    },
+    emptyText: {
+        textAlign: "center",
+        color: "#FFFFFF",
+    },
+});
 
 export default Search;

@@ -16,8 +16,6 @@ export default function Index() {
         error: moviesError,
     } = useFetch(getMovies);
 
-    console.log('data', movies);
-
     return (
         <View style={styles.container}>
             <Image source={images.bg} style={styles.bgImage} />
@@ -46,7 +44,7 @@ export default function Index() {
                                     image={item.image}
                                 />
                             )}
-                            keyExtractor={(item) => item.movieId ?? item.title}
+                            keyExtractor={(item) => item.movie_id}
                             numColumns={3}
                             columnWrapperStyle={styles.columnWrapper}
                             style={styles.latestMovies}
