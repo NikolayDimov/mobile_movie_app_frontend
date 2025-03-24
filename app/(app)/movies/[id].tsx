@@ -47,10 +47,17 @@ const MovieDetails = () => {
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
                 <View>
-                    <Image
-                        source={movie?.image}
-                        style={styles.image}
-                    />
+                    {movie?.image ? (
+                        <Image
+                            source={{ uri: movie.image }}
+                            style={styles.image}
+                        />
+                    ) : (
+                        <View style={[styles.image, { backgroundColor: '#333', justifyContent: 'center', alignItems: 'center' }]}>
+                            <Text style={{ color: '#fff' }}>No Image</Text>
+                        </View>
+                    )}
+
                 </View>
                 <View style={styles.detailsContainer}>
                     <Text style={styles.title}>{movie?.title}</Text>
@@ -86,9 +93,12 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '100%',
-        height: 550,
-        resizeMode: "cover"
+        height: 500,
+        resizeMode: "cover",
+        borderRadius: 8,
+        backgroundColor: '#000',
     },
+
     detailsContainer: {
         padding: 16,
     },
