@@ -32,25 +32,29 @@ export default function Index() {
                 ) : moviesError ? (
                     <Text style={styles.errorText}>Error: {moviesError?.message}</Text>
                 ) : (
-                    <View style={styles.mainContent}>
-                        <Text style={styles.sectionTitle}>Latest Movies</Text>
-                        <FlatList
-                            data={movies}
-                            renderItem={({ item }) => (
-                                <MovieCard
-                                    movie_id={item.movie_id}
-                                    title={item.title}
-                                    release_date={item.release_date}
-                                    image={item.image}
-                                />
-                            )}
-                            keyExtractor={(item) => item.movie_id}
-                            numColumns={3}
-                            columnWrapperStyle={styles.columnWrapper}
-                            style={styles.latestMovies}
-                            scrollEnabled={false}
-                        />
-                    </View>
+                    <>
+                        <View>
+                            <Text style={styles.sectionTitle}>Latest Movies</Text>
+                        </View>
+                        <View style={styles.mainContent}>
+                            <FlatList
+                                data={movies}
+                                renderItem={({ item }) => (
+                                    <MovieCard
+                                        movie_id={item.movie_id}
+                                        title={item.title}
+                                        release_date={item.release_date}
+                                        image={item.image}
+                                    />
+                                )}
+                                keyExtractor={(item) => item.movie_id}
+                                numColumns={3}
+                                columnWrapperStyle={styles.columnWrapper}
+                                style={styles.latestMovies}
+                                scrollEnabled={false}
+                            />
+                        </View>
+                    </>
                 )}
             </ScrollView>
         </View>
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
     logo: {
         width: 48,
         height: 40,
-        marginTop: 80,
+        marginTop: 50,
         marginBottom: 20,
         alignSelf: "center",
     },
@@ -96,12 +100,13 @@ const styles = StyleSheet.create({
     mainContent: {
         flex: 1,
         marginTop: 20,
+
     },
     sectionTitle: {
         fontSize: 18,
         color: "#ffffff",
         fontWeight: "bold",
-        marginBottom: 12,
+        textAlign: "center",
     },
     columnWrapper: {
         display: "flex",
