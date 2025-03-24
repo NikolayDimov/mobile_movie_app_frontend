@@ -11,6 +11,10 @@ export default function Register() {
     const [error, setError] = useState("");
 
     const handleRegister = async () => {
+        if (password !== confirmPassword) {
+            setError("Passwords do not match");
+            return;
+        }
         try {
             await register(email, password);
         } catch (err) {
