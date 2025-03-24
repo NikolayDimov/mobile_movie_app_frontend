@@ -22,10 +22,12 @@ const TabsLayout = () => {
             screenOptions={{
                 tabBarShowLabel: false,
                 tabBarItemStyle: {
-                    width: "100%",
-                    height: "100%",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    paddingHorizontal: 10,
+                    borderRadius: 20,
+                    height: '100%',
                 },
                 tabBarStyle: {
                     backgroundColor: "#0F0D23",
@@ -107,9 +109,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 10,
-        borderRadius: 25,
-        minWidth: 112,
-        minHeight: 48,
+        borderRadius: 20,
+        minWidth: 100,
+        minHeight: 46,
     },
     icon: {
         width: 24,

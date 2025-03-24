@@ -33,7 +33,7 @@ const useFilter = <T>({ items, initialItems }: UseFilterProps<T>): UseFilterResu
             );
             setFilteredItems(filtered);
         } else {
-            setFilteredItems([]); // Clear the list if no search query
+            setFilteredItems([]);
         }
     }, [items, debouncedQuery]);
 
