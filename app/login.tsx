@@ -1,28 +1,17 @@
 import { View, TextInput, Button, Text, StyleSheet, Alert } from "react-native";
 import { useState } from "react";
 import { router } from "expo-router";
-import { getToken, storeToken } from "@/utils/AsyncStorage";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Login() {
+    const { login } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
     const handleLogin = async () => {
         try {
-            const response = await fetch("http://localhost:3000/auth/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email, password }),
-            });
-            if (!response.ok) {
-                throw new Error("Invalid credentials");
-            }
-            const data = await response.json();
-            await storeToken(data.access_token);
-            router.replace("/(app)/(tabs)");
+            await login(email, password);
         } catch (err) {
             console.log(err);
             if (err instanceof Error) {

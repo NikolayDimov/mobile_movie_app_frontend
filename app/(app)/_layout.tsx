@@ -1,24 +1,11 @@
-
-import { getToken } from "@/utils/AsyncStorage";
-import { useEffect, useState } from "react";
-import { Stack, useRouter, Redirect } from "expo-router";
-
-
+import { Stack, Redirect } from "expo-router";
+import { useAuth } from "@/context/AuthContext";
 
 export default function AuthLayout() {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(false);
-    const router = useRouter();
+    const { isLoggedIn } = useAuth();
+    // const forcedIsLoggedIn = false; 
 
-    useEffect(() => {
-        const checkAuthentication = async () => {
-            const token = await getToken();
-            setIsAuthenticated(!!token);
-        };
-        checkAuthentication();
-    }, []);
-
-    if (!isAuthenticated) {
-        console.log("Redirecting to /login");
+    if (!isLoggedIn) {
         return <Redirect href="/login" />;
     }
 

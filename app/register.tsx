@@ -1,34 +1,18 @@
 import { View, TextInput, Button, Text, StyleSheet } from "react-native";
 import { useState } from "react";
 import { router } from "expo-router";
-import { storeToken } from "@/utils/AsyncStorage";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Register() {
+    const { register } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
 
     const handleRegister = async () => {
-        if (password !== confirmPassword) {
-            setError("Passwords do not match");
-            return;
-        }
-
         try {
-            const response = await fetch("http://localhost:3000/auth/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email, password }),
-            });
-            if (!response.ok) {
-                throw new Error("Failed to register");
-            }
-            const data = await response.json();
-            await storeToken(data.token);
-            router.replace("/(app)/(tabs)");
+            await register(email, password);
         } catch (err) {
             console.log(err);
             if (err instanceof Error) {
