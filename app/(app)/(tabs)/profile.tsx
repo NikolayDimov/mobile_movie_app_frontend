@@ -1,6 +1,6 @@
 import { View, Text, Button, StyleSheet, Image } from 'react-native';
 import { useAuth } from '@/context/AuthContext';
-import { images } from "@/constants/images"; // Import your background image
+import { images } from "@/constants/images";
 
 const Profile = () => {
     const { user, logout } = useAuth();
@@ -8,14 +8,12 @@ const Profile = () => {
 
     return (
         <View style={styles.container}>
-            {/* Background Image */}
             <Image
                 source={images.bg}
                 style={styles.backgroundImage}
                 resizeMode="cover"
             />
 
-            {/* Main Content */}
             <View style={styles.contentContainer}>
                 <Text style={styles.title}>Profile</Text>
                 {email ? (

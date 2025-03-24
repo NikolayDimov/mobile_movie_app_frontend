@@ -1,5 +1,3 @@
-
-
 import { StatusBar } from "react-native";
 import { Stack } from "expo-router";
 import { AuthProvider } from "@/context/AuthContext";

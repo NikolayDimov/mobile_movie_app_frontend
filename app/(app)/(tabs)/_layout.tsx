@@ -1,10 +1,15 @@
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, ImageSourcePropType } from 'react-native'
 import React from 'react'
 import { Tabs } from 'expo-router'
-
 import { icons } from '@/constants/icons'
 
-const TabIcon = ({ focused, icon, title }: any) => {
+type TabIconProps = {
+    focused: boolean;
+    icon: ImageSourcePropType;
+    title: string;
+};
+
+const TabIcon = ({ focused, icon, title }: TabIconProps) => {
     const backgroundColor = focused ? '#AB8BFF' : 'transparent';
     const textColor = focused ? '#151312' : '#A8B5DB';
 

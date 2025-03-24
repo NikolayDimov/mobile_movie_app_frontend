@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { View, Text, ActivityIndicator, FlatList, Image, StyleSheet } from "react-native";
 
 import { images } from "@/constants/images";

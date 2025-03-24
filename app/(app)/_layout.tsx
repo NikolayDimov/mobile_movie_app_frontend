@@ -3,7 +3,7 @@ import { useAuth } from "@/context/AuthContext";
 
 export default function AuthLayout() {
     const { isLoggedIn } = useAuth();
-    // const forcedIsLoggedIn = false; 
+    // const IsLoggedIn = false; 
 
     if (!isLoggedIn) {
         return <Redirect href="/login" />;
