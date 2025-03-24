@@ -32,7 +32,7 @@ const TabsLayout = () => {
                     justifyContent: 'center',
                     paddingHorizontal: 10,
                     borderRadius: 20,
-                    height: '100%',
+                    height: 46,
                 },
                 tabBarStyle: {
                     backgroundColor: "#0F0D23",
@@ -109,14 +109,13 @@ const TabsLayout = () => {
 
 const styles = StyleSheet.create({
     tabIconContainer: {
-        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 10,
         borderRadius: 20,
         minWidth: 100,
-        minHeight: 46,
+        height: 46,
     },
     icon: {
         width: 24,

@@ -5,7 +5,9 @@ export const getMovies = async () => {
     if (!user) {
         throw new Error('User not authenticated');
     }
-    let url = 'http://localhost:3000/movies';
+    // let url = 'http://localhost:3000/movies';
+    let url = 'http://192.168.1.37:3000/movies';
+
     const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -29,7 +31,7 @@ export const getMovieDetails = async (movie_id: string) => {
         throw new Error('User not authenticated');
     }
 
-    const response = await fetch(`http://localhost:3000/movies/${movie_id}`, {
+    const response = await fetch(`http://192.168.1.37:3000/movies/${movie_id}`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
