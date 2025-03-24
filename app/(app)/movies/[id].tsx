@@ -64,6 +64,7 @@ const MovieDetails = () => {
 
                     <MovieInfo label="Overview" value={movie?.description} />
                     <MovieInfo label="Genres" value={movie?.genre} />
+                    <MovieInfo label="Length" value={movie?.length} />
                 </View>
             </ScrollView>
 
