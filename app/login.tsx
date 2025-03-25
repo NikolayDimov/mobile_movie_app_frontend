@@ -43,17 +43,11 @@ export default function Login() {
             {error ? <Text style={styles.error}>{error}</Text> : null}
             <Button title="Login" onPress={handleLogin} color="#AE8FFE" />
 
-            {/* Use signInWithGoogle directly from AuthContext */}
-            {/* <Button
-                title="Login with Google"
-                onPress={signInWithGoogle} // This calls signInWithGoogle from AuthContext
-                color="#db4437"
-            /> */}
             <GoogleSigninButton
-                onPress={signInWithGoogle} // This calls signInWithGoogle from AuthContext
+                onPress={signInWithGoogle}
                 style={styles.googleButton}
                 size={GoogleSigninButton.Size.Wide}
-                color={GoogleSigninButton.Color.Dark} // Customize the button color
+                color={GoogleSigninButton.Color.Dark}
             />
 
             <Text style={styles.registerText} onPress={() => router.push("./register")}>

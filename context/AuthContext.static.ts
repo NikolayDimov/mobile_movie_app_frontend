@@ -1,7 +1,8 @@
 export interface User {
+    uid?: string;
     access_token: string;
     id: string;
-    email: string;
+    email: string | null;
 }
 
 export interface JwtPayload {

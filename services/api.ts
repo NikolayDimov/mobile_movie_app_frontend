@@ -2,9 +2,9 @@ import { getUser } from "@/utils/getUser";
 
 export const getMovies = async () => {
     const user = await getUser();
-    if (!user) {
-        throw new Error('User not authenticated');
-    }
+    // if (!user) {
+    //     throw new Error('User not authenticated');
+    // }
     // let url = 'http://localhost:3000/movies';
     let url = 'http://192.168.1.37:3000/movies';
 
@@ -12,7 +12,7 @@ export const getMovies = async () => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${user.access_token}`,
+            Authorization: `Bearer ${user?.access_token}`,
         },
     });
 
@@ -27,15 +27,15 @@ export const getMovies = async () => {
 
 export const getMovieDetails = async (movie_id: string) => {
     const user = await getUser();
-    if (!user) {
-        throw new Error('User not authenticated');
-    }
+    // if (!user) {
+    //     throw new Error('User not authenticated');
+    // }
 
     const response = await fetch(`http://192.168.1.37:3000/movies/${movie_id}`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${user.access_token}`,
+            Authorization: `Bearer ${user?.access_token}`,
         },
     });
 

@@ -18,7 +18,7 @@ interface AuthContextType {
 }
 
 GoogleSignin.configure({
-    webClientId: `${process.env.GOOGLE_CLIENT_ID}`,
+    webClientId: `507232671380-ua0mhvdehpg25v5r6ed28pbpckouomr4.apps.googleusercontent.com`,
 });
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -50,12 +50,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     useEffect(() => {
         const unsubscribe = auth().onAuthStateChanged(async (firebaseUser) => {
-            if (firebaseUser) {
+            if (firebaseUser && (!user || firebaseUser.uid !== user.uid)) {
                 setUser(firebaseUser);
                 setIsLoggedIn(true);
                 await AsyncStorage.setItem("user", JSON.stringify(firebaseUser));
                 await AsyncStorage.setItem("isUserLoggedIn", "true");
-            } else {
+            } else if (!firebaseUser && user) {
                 setUser(null);
                 setIsLoggedIn(false);
                 await AsyncStorage.removeItem("user");
@@ -65,6 +65,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
         return () => unsubscribe();
     }, []);
+
 
     const signInWithGoogle = async () => {
         try {
@@ -79,6 +80,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             const googleCredential = auth.GoogleAuthProvider.credential(signInResult.data && signInResult.data.idToken);
             await auth().signInWithCredential(googleCredential);
 
+            setIsLoggedIn(true);
+            await AsyncStorage.setItem("isUserLoggedIn", "true");
             router.replace("/(app)/(tabs)");
         } catch (error: any) {
             console.error("Google Sign-In Error:", error.message);
@@ -110,15 +113,30 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const logout = async () => {
         try {
-            await AsyncStorage.removeItem("user");
-            await AsyncStorage.removeItem("isUserLoggedIn");
+            const currentFirebaseUser = auth().currentUser;
+
+            if (currentFirebaseUser) {
+                await auth().signOut();
+                console.log("Firebase user signed out.");
+            }
+
+            const currentUserFromStorage = await AsyncStorage.getItem("user");
+
+            if (currentUserFromStorage) {
+                await AsyncStorage.removeItem("user");
+                await AsyncStorage.removeItem("isUserLoggedIn");
+                console.log("Backend user data removed from AsyncStorage.");
+            }
+
             setUser(null);
             setIsLoggedIn(false);
+
             router.replace("/login");
         } catch (error) {
             console.error("Logout error:", error);
         }
     };
+
 
     const handleLogin = async (userData: User) => {
         const decodedToken: JwtPayload = jwtDecode(userData.access_token);
