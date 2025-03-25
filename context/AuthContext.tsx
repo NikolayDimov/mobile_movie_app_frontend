@@ -5,12 +5,21 @@ import { loginUser, registerUser } from "@/services/apiService";
 import { JwtPayload, User } from "./AuthContext.static";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+// Firebase Imports:
+import { auth } from "@/services/firebaseConfig";
+import { GoogleAuthProvider, signInWithCredential } from "firebase/auth";
+import * as WebBrowser from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
+// To fix web browser auto-dismiss issues
+WebBrowser.maybeCompleteAuthSession();
+
 interface AuthContextType {
     user: User | null;
     login: (email: string, password: string) => Promise<void>;
     register: (email: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
     isLoggedIn: boolean;
+    signInWithGoogle: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -19,6 +28,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [user, setUser] = useState<User | null>(null);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const router = useRouter();
+
+    // Google Auth request
+    const [request, response, promptAsync] = Google.useAuthRequest({
+        clientId: `${process.env.EXPO_CLIENT_ID}`,
+        iosClientId: process.env.IOS_CLIENT_ID,
+        androidClientId: `${process.env.ANDROID_CLIENT_ID}`,
+        scopes: ['profile', 'email'],
+    });
 
     useEffect(() => {
         const loadUser = async () => {
@@ -38,6 +55,37 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
         loadUser();
     }, []);
+
+    useEffect(() => {
+        // Handle Google Sign-In response
+        if (response?.type === "success") {
+            // const { id_token } = response.authentication!;
+            const idToken = response.authentication?.idToken;
+
+            const credential = GoogleAuthProvider.credential(idToken);
+            signInWithCredential(auth, credential)
+                .then(async (firebaseUser) => {
+                    // You can either:
+                    // 1. Use Firebase session only
+                    // OR:
+                    // 2. Send firebaseUser to NestJS backend → create JWT token
+
+                    // Option 1: Simplified → just store Firebase email
+                    const userToStore: User = {
+                        access_token: idToken!,
+                        id: firebaseUser.user.uid,
+                        email: firebaseUser.user.email || "",
+                    };
+
+                    await AsyncStorage.setItem("user", JSON.stringify(userToStore));
+                    await AsyncStorage.setItem("isUserLoggedIn", "true");
+                    setUser(userToStore);
+                    setIsLoggedIn(true);
+                    router.replace("/(app)/(tabs)");
+                })
+                .catch((err) => console.log("Firebase Google login error:", err));
+        }
+    }, [response]);
 
     const login = async (email: string, password: string) => {
         try {
@@ -90,8 +138,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     };
 
+    // Google Sign-In Trigger
+    const signInWithGoogle = async () => {
+        try {
+            await promptAsync();
+        } catch (err) {
+            console.error("Google login error:", err);
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ user, login, register, logout, isLoggedIn }}>
+        <AuthContext.Provider value={{ user, login, register, logout, isLoggedIn, signInWithGoogle }}>
             {children}
         </AuthContext.Provider>
     );

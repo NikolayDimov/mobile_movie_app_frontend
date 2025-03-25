@@ -1,10 +1,11 @@
-import { View, TextInput, Button, Text, StyleSheet, Alert } from "react-native";
+import { View, TextInput, Button, Text, StyleSheet } from "react-native";
 import { useState } from "react";
 import { router } from "expo-router";
 import { useAuth } from "@/context/AuthContext";
+import * as Google from "expo-auth-session/providers/google";
 
 export default function Login() {
-    const { login } = useAuth();
+    const { login, signInWithGoogle } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -41,6 +42,14 @@ export default function Login() {
             />
             {error ? <Text style={styles.error}>{error}</Text> : null}
             <Button title="Login" onPress={handleLogin} color="#AE8FFE" />
+
+            {/* Use signInWithGoogle directly from AuthContext */}
+            <Button
+                title="Login with Google"
+                onPress={signInWithGoogle} // This calls signInWithGoogle from AuthContext
+                color="#db4437"
+            />
+
             <Text style={styles.registerText} onPress={() => router.push("./register")}>
                 Don't have an account? Register
             </Text>
