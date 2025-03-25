@@ -3,9 +3,6 @@
         "development": {
             "developmentClient": true,
             "distribution": "internal",
-            "android": {
-                "simulator": true
-            },
             "ios": {
                 "simulator": true
             }
@@ -13,7 +10,9 @@
         "preview": {
             "distribution": "internal"
         },
-        "production": {}
+        "production": {
+            "distribution": "store"
+        }
     },
     "submit": {
         "production": {}

@@ -2,7 +2,7 @@ import { View, TextInput, Button, Text, StyleSheet } from "react-native";
 import { useState } from "react";
 import { router } from "expo-router";
 import { useAuth } from "@/context/AuthContext";
-import * as Google from "expo-auth-session/providers/google";
+import { GoogleSigninButton } from "@react-native-google-signin/google-signin";
 
 export default function Login() {
     const { login, signInWithGoogle } = useAuth();
@@ -44,10 +44,16 @@ export default function Login() {
             <Button title="Login" onPress={handleLogin} color="#AE8FFE" />
 
             {/* Use signInWithGoogle directly from AuthContext */}
-            <Button
+            {/* <Button
                 title="Login with Google"
                 onPress={signInWithGoogle} // This calls signInWithGoogle from AuthContext
                 color="#db4437"
+            /> */}
+            <GoogleSigninButton
+                onPress={signInWithGoogle} // This calls signInWithGoogle from AuthContext
+                style={styles.googleButton}
+                size={GoogleSigninButton.Size.Wide}
+                color={GoogleSigninButton.Color.Dark} // Customize the button color
             />
 
             <Text style={styles.registerText} onPress={() => router.push("./register")}>
@@ -90,5 +96,10 @@ const styles = StyleSheet.create({
         color: "#007BFF",
         textAlign: "center",
         fontSize: 16,
+    },
+    googleButton: {
+        width: "100%",
+        height: 48,
+        marginTop: 20,
     },
 });

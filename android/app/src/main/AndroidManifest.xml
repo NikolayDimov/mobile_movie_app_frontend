@@ -26,6 +26,7 @@
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="movies"/>
         <data android:scheme="com.expo.mobilemovie"/>
+        <data android:scheme="exp+mobilemovieapp"/>
       </intent-filter>
     </activity>
   </application>
