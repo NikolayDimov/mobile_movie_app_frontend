@@ -1,50 +1,111 @@
-# Welcome to your Expo app 👋
+# Movie Mobile App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Overview
+Movie Mobile App is a React Native application that allows users to browse a list of movies, view detailed movie information, and manage their profiles. The app supports authentication with an external provider and includes push notification functionality.
 
-## Get started
+## Features
+- **Authentication**
+  - Users can log in using an external provider (Google, Facebook, or Apple).
+  - Users can log in using Nest.js
+  
+- **Movies List Screen**
+  - Displays a list of movies.
+  - Clicking a movie navigates to the Movie Details Screen.
 
-1. Install dependencies
+- **Movie Details Screen**
+  - Displays detailed information about a selected movie (title, year, genre, cover photo, description, added on).
 
-   ```bash
+- **Profile Screen**
+  - Shows user profile details (username, email).
+  - Includes a logout button.
+
+- **Navigation**
+  - Bottom tab navigation between Movies List and Profile Screens.
+
+- **Push Notifications**
+  - Users receive push notifications.
+  - Opening a notification navigates the user to a specific Movie Details Screen.
+
+## Features
+- UI designed with an intuitive and visually appealing layout.
+
+## Technology Stack
+### Frontend (Mobile App)
+- React Native
+- Expo Router
+- Firebase Authentication (Google Sign-In)
+- Firebase Firestore
+- Context API 
+- React Navigation (Bottom Tabs & Stack Navigator)
+- Expo Push Notifications
+
+### Backend
+- Nest.js
+
+## Setup Instructions
+### Prerequisites
+- Node.js installed (Recommended version: v22.9.0)
+- Expo CLI installed (`yarn global add expo-cli`)
+- Firebase account setup
+- Run Nest.js server
+
+### Installation Steps
+1. **Clone the repository**
+   ```sh
+   git clone <repository_url>
+   cd movie-mobile-app
+   ```
+
+2. **Install dependencies**
+   ```sh
    npm install
    ```
 
-2. Start the app
+3. **Configure Firebase**
+   - Create a Firebase project and enable Authentication (Google Sign-In).
+   - Add Firestore database and configure rules.
+   - Update `firebaseConfig.js` with Firebase credentials.
 
-   ```bash
-    npx expo start
+4. **Run backend server**
+  mobile_movie_app_backend project
+
+5. **Run the React Native app**
+   ```sh
+   npx expo run:android
    ```
 
-In the output, you'll find options to open the app in a
+### Running on a Device/Simulator
+- For Android: Use an emulator (Android Studio) or a physical device.
+- For iOS: Use an iPhone simulator (Xcode) or a real device.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Push Notifications Setup
+1. Enable push notifications in Firebase Cloud Messaging (FCM).
+2. Configure `expo-notifications` in `App.js`.
+3. To send a push notification, use the Firebase console.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Demo Credentials
+- Test Login Credentials (Facebook/Google):
+  - Email: `testuser@example.com`
+  - Password: `password123`
 
-## Get a fresh project
+## Future Enhancements
+- Implement real-time data fetching.
+- Store user-generated content in Firebase Firestore.
+- Enhance UI with animations and themes.
 
-When you're ready, run:
+## License
+This project is for demonstration purposes only.
 
-```bash
-npm run reset-project
-```
+---
+For any questions or issues, feel free to contact the repository owner.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-## Learn more
 
-To learn more about developing your project with Expo, look at the following resources:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
 
-## Join the community
+## Screenshot
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+![Login screen](./assets/images/login.png)
+![Home screen](./assets/images/home.png)
+![Search screen](./assets/images/search.png)
+![Details screen](./assets/images/details.png)
